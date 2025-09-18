@@ -1,0 +1,171 @@
+:root {
+ 
+  --ff-accent: 'Merriweather', serif;
+  
+  --clr-primary: #f00;
+  --clr-dark: #101419;
+  --delay: 200ms;
+  --transition: 300ms ease;
+}
+
+/*------------------------------------*\
+  #GLOBAL
+\*------------------------------------*/
+
+
+body {
+ 
+
+  min-height: 100vh;
+
+
+  font-family: var(--ff-primary);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+body,
+h1, h2, h3,
+p {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--ff-accent);
+  line-height: 1.1;
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+
+/* Adjusted card width and added spacing between cards */
+.card {
+  display: grid;
+  width: 100%;
+  max-width: 30rem; /* Wider card */
+  aspect-ratio: 3/4;  /* Maintain card proportion */
+  margin: 1.5rem auto; /* Center the card and add spacing */
+  
+  color: #fff;
+  border-radius: 0.5em;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 10px, ; /* Increased shadow thickness */
+
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image: linear-gradient(rgb(0, 0, 0, 0.1), rgb(0, 0, 0, 0.9) 60%);
+  z-index: -1;
+  opacity: 0;
+  
+  transition: var(--transition) calc(var(--delay) * 2); /* [1] */
+}
+
+.card:is(:hover, :focus)::before {
+  transition: var(--transition); /* [2] */
+  opacity: 1;
+}
+
+.card__img-container {
+  position: absolute;
+  inset: 0;
+  z-index: -5;
+}
+
+.card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.card:is(:hover, :focus) .card__img {
+  transform: scale(1.05);
+  
+}
+
+/* Added white background behind text in default state */
+.card__content {
+  font-size: 1.25rem;
+  display: grid;
+  justify-self: start;
+  align-self: end;
+ 
+  padding: 0.4em;
+
+  position: relative;
+  transition: var(--transition) var(--delay);
+  color: #000;
+  text-shadow: 0px -4px 10px rgba(255, 255, 255, 0.9);
+
+  /* background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.5) 10%,
+    rgba(255, 251, 251, 0.2) 40%,
+    rgba(255, 255, 255, 0) 70%
+  ); */
+   /* Gradient from bottom to top */
+  width: 100%;
+}
+
+
+
+.card:is(:hover, :focus) .card__content {
+  transform: translateY(0%);
+  opacity: 1;
+  transition: var(--transition) var(--delay);
+  color: #fff; /* Text color changes to white on hover */
+  text-shadow: none; /* Remove shadow on hover */
+  background-color: transparent; /* Remove background on hover */
+}
+
+.card__content::before {
+  content: "";
+  position: absolute;
+  inset: auto auto auto 0; /* Position the red line above the text */
+  bottom: 100%; /* Move the red line above the text */
+  width: 150px; /* Set a fixed length for the red line */
+  height: 3px;
+
+  background-color: var(--clr-primary);
+  scale: 0;
+  transform-origin: left;
+  transition: var(--transition);
+}
+
+.card:is(:hover, :focus) .card__content::before {
+  transition: var(--transition) calc(var(--delay) * 2);
+  scale: 1;
+  
+}
+
+.card__title {
+  font-size: 1.5rem;
+}
+
+.card__description {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: var(--transition);
+  
+}
+
+.card:is(:hover, :focus) .card__description {
+  opacity: 1;
+  max-height: 6rem; /* adjust as needed */
+  color: #ffffff;
+}
